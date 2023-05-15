@@ -1,8 +1,9 @@
 #include "../raylib/include/raylib.h"
+#include <stdbool.h>
 
 typedef struct col_data_struct
 {
-    int collison;
+    bool collison;
     Vector2 contact_point;
     Vector2 contact_normal;
     float t_hit_near;
