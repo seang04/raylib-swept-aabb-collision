@@ -1,4 +1,5 @@
 #include "../raylib/include/raylib.h"
+#include "../raylib/include/raymath.h"
 #include "../src/rect-collision.h"
 #include <stdio.h>
 
@@ -43,6 +44,8 @@ int main()
         {
             DrawRectangleRec(rect, DARKGREEN);
             DrawCircleV(collision.contact_point, 10 * screen_scale_x, RED);
+            Vector2 normal = Vector2Scale(collision.contact_normal, 100 * screen_scale_x);
+            DrawLineEx(collision.contact_point, Vector2Add(normal, collision.contact_point), 1 * screen_scale_x , BLACK);
             DrawText(contact_point, 5, GetScreenHeight() - 100 * (screen_scale_x), (15 * (screen_scale_x)), BLACK);
             DrawText(contact_normal, 5, GetScreenHeight() - 75 * (screen_scale_x), (15 * (screen_scale_x)), BLACK);
         }

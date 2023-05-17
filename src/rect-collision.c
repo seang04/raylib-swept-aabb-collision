@@ -1,6 +1,7 @@
 #include "rect-collision.h"
 #include <math.h>
 #include <stdlib.h>
+#include <stdio.h>
 #include "../raylib/include/raymath.h"
 
 collision_data collision_ray_rect(Vector2 ray_origin, Vector2 ray_dir, Rectangle target)
@@ -10,12 +11,12 @@ collision_data collision_ray_rect(Vector2 ray_origin, Vector2 ray_dir, Rectangle
 
     float t_near_x = (target.x - ray_origin.x) / ray_dir.x;
     float t_far_x = (target.x + target.width - ray_origin.x) / ray_dir.x;
-    float t_near_y = (target.x - ray_origin.y) / ray_dir.y;
+    float t_near_y = (target.y - ray_origin.y) / ray_dir.y;
     float t_far_y = (target.y + target.height - ray_origin.y) / ray_dir.y;
 
     if (isnan(t_far_y) || isnan(t_far_x)) return out;
-
     if (isnan(t_near_y) || isnan(t_near_x)) return out;
+
 
     if (t_near_x > t_far_x)
     {
@@ -32,10 +33,10 @@ collision_data collision_ray_rect(Vector2 ray_origin, Vector2 ray_dir, Rectangle
 
     if (t_near_x > t_far_y || t_near_y > t_far_x) return out;
 
-    out.t_hit_near = fmax(t_near_x, t_near_y);
+    out.t_hit_near = fmaxf(t_near_x, t_near_y);
     if(out.t_hit_near > 1) return out;
 
-    float t_hit_far = fmin(t_far_x, t_far_y);
+    float t_hit_far = fminf(t_far_x, t_far_y);
     if(t_hit_far < 0) return out;
 
     out.contact_point = Vector2Add(ray_origin, Vector2Scale(ray_dir, out.t_hit_near));
@@ -65,4 +66,26 @@ collision_data collision_ray_rect(Vector2 ray_origin, Vector2 ray_dir, Rectangle
 
     out.collison = true;
     return out;
+}
+
+collision_data collision_rectangle(Rectangle source, Vector2 src_velocity, Rectangle target)
+{
+    collision_data out;
+    out.collison = false;
+    if (src_velocity.x == 0 && src_velocity.y == 0) return out;
+
+    Rectangle expanded_target;
+    expanded_target.x = target.x - source.width / 2;
+    expanded_target.y = target.y - source.height / 2;
+    expanded_target.width = target.width + source.width;
+    expanded_target.height = target.height + source.height;
+
+    out = collision_ray_rect((Vector2){source.x, source.y}, Vector2Scale(src_velocity, GetFrameTime()), expanded_target);
+    return out;
+}
+
+
+void __attribute__ ((constructor)) initLibrary(void)
+{
+    printf("raylib rect-collision library initialized.\n");
 }
