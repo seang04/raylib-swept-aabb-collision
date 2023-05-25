@@ -1,7 +1,8 @@
 ///rect-collision.h
 ///provides functions for an implementation of swept AABB collision detection
-///for use with raylib. Also provides simple dynamic rectangle struct
-///which is just a raylib rectangle with a velocity.
+///for use with raylib.
+///Also provides simple dynamic rectangle struct which is just a raylib
+///rectangle with a velocity.
 ///@author Sean Gaines
 
 #include "../raylib/include/raylib.h"
@@ -9,7 +10,7 @@
 
 typedef struct col_data_struct
 {
-    bool collison;
+    bool collision;
     Vector2 contact_point;
     Vector2 contact_normal;
     float t_hit_near;
@@ -35,5 +36,6 @@ collision_data collision_ray_rect(Vector2 ray_origin, Vector2 ray_dir, Rectangle
 
 
 collision_data collision_rectangle(Rectangle source, Vector2 src_velocity, Rectangle target);
+
 
 collision_data collision_dynamic_rectangle(DynamicRectangle source, Rectangle target);

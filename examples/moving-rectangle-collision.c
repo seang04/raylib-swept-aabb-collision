@@ -5,7 +5,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#define NUM_STATICS 11
+#define NUM_STATICS 10
 #define SPEED 200
 
 
@@ -39,7 +39,11 @@ int main()
     Rectangle statics[NUM_STATICS];
     statics[0] = (Rectangle){200, 200, 100, 50};
     statics[1] = (Rectangle){280, 150, 20, 50};
-    statics[2] = (Rectangle){351, 150, 50, 100};
+    statics[2] = (Rectangle){355, 150, 50, 100};
+    for(int i = 0; i < 7; i++)
+    {
+        statics[i + 3] = (Rectangle){150 + (50 * i), 350, 50, 50};
+    }
 
     pair collisions[NUM_STATICS];
 
@@ -82,10 +86,8 @@ int main()
             collision_data collision = collision_dynamic_rectangle(dynamic, statics[collisions[i].index]);
             if(collision.collision)
             {
-                //printf("%d, %f\n", collisions[i].index, collision.t_hit_near);
                 dynamic.velocity.x += collision.contact_normal.x * fabs(dynamic.velocity.x) * (1 - collision.t_hit_near);
                 dynamic.velocity.y += collision.contact_normal.y * fabs(dynamic.velocity.y) * (1 - collision.t_hit_near);
-                //printf("<%f, %f>\n", dynamic.velocity.x, dynamic.velocity.y);
             }
         }
 

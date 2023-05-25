@@ -7,7 +7,9 @@
 collision_data collision_ray_rect(Vector2 ray_origin, Vector2 ray_dir, Rectangle target)
 {
     collision_data out;
-    out.collison = false;
+    out.collision = false;
+    out.contact_normal = (Vector2){0, 0};
+    out.contact_point = (Vector2){0, 0};
 
     float t_near_x = (target.x - ray_origin.x) / ray_dir.x;
     float t_far_x = (target.x + target.width - ray_origin.x) / ray_dir.x;
@@ -63,15 +65,19 @@ collision_data collision_ray_rect(Vector2 ray_origin, Vector2 ray_dir, Rectangle
             out.contact_normal = (Vector2){0, -1};
         }
     }
+    //else
+    //{
+    //    out.contact_normal = Vector2Scale((Vector2){ray_dir.x / fabs(ray_dir.x) , ray_dir.y / fabs(ray_dir.y)}, -1);
+    //}
 
-    out.collison = true;
+    out.collision = true;
     return out;
 }
 
 collision_data collision_rectangle(Rectangle source, Vector2 src_velocity, Rectangle target)
 {
     collision_data out;
-    out.collison = false;
+    out.collision = false;
     if (src_velocity.x == 0 && src_velocity.y == 0) return out;
 
     Rectangle expanded_target;
@@ -80,7 +86,15 @@ collision_data collision_rectangle(Rectangle source, Vector2 src_velocity, Recta
     expanded_target.width = target.width + source.width;
     expanded_target.height = target.height + source.height;
 
-    out = collision_ray_rect((Vector2){source.x, source.y}, Vector2Scale(src_velocity, GetFrameTime()), expanded_target);
+    out = collision_ray_rect((Vector2){source.x + source.width / 2, source.y + source.height / 2}, Vector2Scale(src_velocity, GetFrameTime()), expanded_target);
+    if(out.collision) out.collision = out.t_hit_near >= 0.0 && out.t_hit_near < 1.0f;
+    return out;
+}
+
+collision_data collision_dynamic_rectangle(DynamicRectangle source, Rectangle target)
+{
+    collision_data out;
+    out = collision_rectangle(source.rectangle, source.velocity, target);
     return out;
 }
 
