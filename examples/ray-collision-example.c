@@ -2,6 +2,7 @@
 #include "../raylib/include/raymath.h"
 #include "../src/rect-collision.h"
 #include <stdio.h>
+#include <stdlib.h>
 
 
 int main()
@@ -40,7 +41,7 @@ int main()
 
         DrawLineEx((Vector2){0, 0}, GetMousePosition(), 2.5 * (screen_scale_x), BLACK);
         BeginDrawing();
-        if(collision.collison)
+        if(collision.collision)
         {
             DrawRectangleRec(rect, DARKGREEN);
             DrawCircleV(collision.contact_point, 10 * screen_scale_x, RED);
@@ -61,4 +62,6 @@ int main()
         ClearBackground(RAYWHITE);
         EndDrawing();
     }
+    CloseWindow();
+    return EXIT_SUCCESS;
 }
