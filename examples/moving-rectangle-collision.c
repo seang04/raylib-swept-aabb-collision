@@ -6,7 +6,7 @@
 #include <stdio.h>
 
 #define NUM_STATICS 10
-#define SPEED 200
+#define SPEED 300
 
 
 typedef struct pair
@@ -28,6 +28,7 @@ int main()
     const int screenWidth = 800;
     const int screenHeight = 450;
 
+    SetConfigFlags(FLAG_WINDOW_RESIZABLE);
     InitWindow(screenWidth, screenHeight, "Collision between rectangles");
 
     SetTargetFPS(60);
@@ -46,6 +47,7 @@ int main()
     }
 
     pair collisions[NUM_STATICS];
+    RenderTexture screen = LoadRenderTexture(screenWidth, screenHeight);
 
     while(!WindowShouldClose())
     {
@@ -103,13 +105,20 @@ int main()
 
         dynamic.velocity = Vector2Zero();
 
-        BeginDrawing();
+        BeginTextureMode(screen);
         ClearBackground(RAYWHITE);
         for(int i = 0; i < NUM_STATICS; i++)
         {
             DrawRectangleLinesEx(statics[i], 5, BLACK);
         }
         DrawRectangleRec(dynamic.rectangle, RED);
+
+        //Draw control instructions
+        DrawText("Movement:\n left/right - a/d\n up/down - w/s", 600, 10, 20, BLACK);
+
+        EndTextureMode();
+        BeginDrawing();
+        DrawTexturePro(screen.texture, (Rectangle){0, 0, screen.texture.width, -screen.texture.height}, (Rectangle){0, 0, GetScreenWidth(), GetScreenHeight()}, (Vector2){0, 0}, 0.0, WHITE);
         EndDrawing();
     }
 
