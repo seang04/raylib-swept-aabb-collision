@@ -23,9 +23,12 @@ int main()
     int num_dynamics = 0;
     const Vector2 start_pos = {125, 225};
 
+    RenderTexture2D screen = LoadRenderTexture(screenWidth, screenHeight);
+
     while(!WindowShouldClose())
     {
-        Vector2 direction = Vector2Subtract(GetMousePosition(), (Vector2){125, 225});
+        Vector2 mouse_pos = Vector2Multiply(GetMousePosition(), (Vector2){screenWidth / (float)GetScreenWidth(), screenHeight / (float)GetScreenHeight()});
+        Vector2 direction = Vector2Subtract(mouse_pos, (Vector2){125, 225});
         direction = Vector2Normalize(direction);
 
         if(IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
@@ -66,7 +69,7 @@ int main()
             }
         }
 
-        BeginDrawing();
+        BeginTextureMode(screen);
         ClearBackground(RAYWHITE);
         DrawLineEx(start_pos, Vector2Add(start_pos, Vector2Scale(direction, 50)), 5, RED);
         for(int i = 0; i < num_dynamics; i++)
@@ -74,6 +77,12 @@ int main()
             DrawRectangleLinesEx(dynamics[i].rectangle, 10, BLACK);
         }
         DrawRectangleLinesEx(wall, 10, BLACK);
+
+        DrawText("Click to shoot a rectangle.", 10, 10, 25, BLACK);
+        EndTextureMode();
+
+        BeginDrawing();
+        DrawTexturePro(screen.texture, (Rectangle){0, 0, screen.texture.width, -screen.texture.height}, (Rectangle){0, 0, GetScreenWidth(), GetScreenHeight()}, (Vector2){0, 0}, 0.0, WHITE);
         EndDrawing();
 
     }
