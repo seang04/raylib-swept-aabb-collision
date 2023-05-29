@@ -35,7 +35,21 @@ typedef struct dyanmic_rect_struct
 collision_data collision_ray_rect(Vector2 ray_origin, Vector2 ray_dir, Rectangle target);
 
 
+/**
+ * Checks the collision of a rectangle with a velocity against a stationary
+ * rectangle target.
+ *
+ * @param souce, the moving rectangle
+ * @param src_velocity, the velocity of the moving rectangle
+ * @param target, the target rectangle to check collision against
+ * */
 collision_data collision_rectangle(Rectangle source, Vector2 src_velocity, Rectangle target);
 
-
+/**
+ *Checks the collision of a moving rectangle against a stationary one using the
+ *provided dynamic rectangle type.
+ *
+ *@param source, dynamic rectangle to check collision with
+ *@param target, stationary target rectangle to check collision against
+ **/
 collision_data collision_dynamic_rectangle(DynamicRectangle source, Rectangle target);
