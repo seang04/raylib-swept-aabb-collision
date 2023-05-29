@@ -1,9 +1,15 @@
+///rect-collision.c
+///defines functions declared in rect-collision.h, used for swept aabb
+///collision detection between rectangles.
+///@author Sean Gaines
+
 #include "rect-collision.h"
 #include <math.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include "../raylib/include/raymath.h"
 
+//check collision of a ray against a target rectangel
 collision_data collision_ray_rect(Vector2 ray_origin, Vector2 ray_dir, Rectangle target)
 {
     collision_data out;
@@ -65,15 +71,12 @@ collision_data collision_ray_rect(Vector2 ray_origin, Vector2 ray_dir, Rectangle
             out.contact_normal = (Vector2){0, -1};
         }
     }
-    //else
-    //{
-    //    out.contact_normal = Vector2Scale((Vector2){ray_dir.x / fabs(ray_dir.x) , ray_dir.y / fabs(ray_dir.y)}, -1);
-    //}
 
     out.collision = true;
     return out;
 }
 
+//check collision of a moving rectangle against a stationary target.
 collision_data collision_rectangle(Rectangle source, Vector2 src_velocity, Rectangle target)
 {
     collision_data out;
@@ -91,6 +94,7 @@ collision_data collision_rectangle(Rectangle source, Vector2 src_velocity, Recta
     return out;
 }
 
+//check collision of a dynamic rectangle against a rectangle target.
 collision_data collision_dynamic_rectangle(DynamicRectangle source, Rectangle target)
 {
     collision_data out;
