@@ -1,2 +1,2 @@
-# raylib-rectangle-collision
-A simple library that provides functions for checking arbitrary collision against moving rectangles in raylib.
+# raylib swept aabb collision
+A simple library that provides an implementation of swept axis aligned bounding box collision for raylib
