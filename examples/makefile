@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS =-L../raylib/lib -L../src -l:librect-collision.a -I../src -lraylib -lglfw -lGL -lm -lpthread -ldl -lrt -lX11 -Wall -Wextra -Werror -pedantic -ggdb
+CFLAGS =-L../raylib/lib -L../src -l:librect-collision.a -I../src -lraylib -lGL -lm -lpthread -ldl -lrt -lX11 -Wall -Wextra -Werror -pedantic -ggdb
 
 all: ray-collision-example moving-rectangle-collision rectangle-bounce
 
