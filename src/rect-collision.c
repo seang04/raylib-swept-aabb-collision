@@ -9,7 +9,7 @@
 #include <stdio.h>
 #include "../raylib/include/raymath.h"
 
-//check collision of a ray against a target rectangel
+//check collision of a ray against a target rectangle
 collision_data collision_ray_rect(Vector2 ray_origin, Vector2 ray_dir, Rectangle target)
 {
     collision_data out;
