@@ -1,9 +1,18 @@
 CC = gcc
 CFLAGS =-L../raylib/lib -L../bin -lrect-collision -lraylib -lglfw -lGL -lm -lpthread -ldl -lrt -lX11 -Wall -Wextra -Werror -pedantic
+OUTDIR = ../build
+OBJECTDIR = ../object
 
-all: rect-collision.o
-	ar rcs librect-collision.a rect-collision.o
-	gcc -shared -o librect-collision.so rect-collision.o
+all: $(OUTDIR) $(OBJECTDIR) $(OBJECTDIR)/rect-collision.o 
+	ar rcs $(OUTDIR)/librect-collision.a $(OBJECTDIR)/rect-collision.o
+	$(CC) -shared -o $(OUTDIR)/librect-collision.so $(OBJECTDIR)/rect-collision.o
+	
+$(OUTDIR): 
+	mkdir ../build
+	
+$(OBJECTDIR):
+	mkdir ../object
 
-rect-collision.o: ../src/rect-collision.c ../src/rect-collision.h
-	$(CC) ../src/rect-collision.c -c $(CFLAGS)
+$(OBJECTDIR)/rect-collision.o: rect-collision.c rect-collision.h
+	$(CC) rect-collision.c -c $(CFLAGS)
+	mv *.o $(OBJECTDIR)
