@@ -8,7 +8,4 @@ Shared object and static binaries can also be built from source using the Makefi
 ## Examples
 Examples are included within the repository which demonstrate 3 different uses of the library. 
 #### Linux
-Examples can be built on GNU Linux after cloning the repository by navigating into the examples directory and running.
-```
-make
-```
+Examples can be built on GNU Linux after cloning the repository by navigating into the examples directory and running the makefile inside.
