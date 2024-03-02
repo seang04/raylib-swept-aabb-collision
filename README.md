@@ -5,8 +5,8 @@ A simple library that provides functions for checking arbitrary collision agains
 
 ### Dependencies
 
-GNU C Compiler (gcc) 
-GNU Make utility (make)
+* GNU C Compiler (gcc) 
+* GNU Make utility (make)
 
 Binaries and header files for Linux are avaliable on the [release page](https://github.com/seang04/raylib-swept-aabb-collision/releases). 
 Shared object and static binaries can also be built from source using the Makefile within the `src/` directory.
